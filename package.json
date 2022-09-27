@@ -19,5 +19,8 @@
   "homepage": "https://github.com/lariibravo/tarefamod11#readme",
   "devDependencies": {
     "cypress": "^10.7.0"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^7.5.0"
   }
 }

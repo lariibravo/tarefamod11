@@ -1,9 +1,10 @@
 /// <reference types="cypress" />
+const perfil = require('../fixtures/perfil.json')
 
 describe('funcionalidade Login', () => {
     //antes de cada teste, vou executar a ação
     beforeEach(() => {
-        cy.visit('http://lojaebac.ebaconline.art.br/minha-conta/')
+        cy.visit('minha-conta/')
     });
 
     afterEach(() => {
@@ -17,6 +18,25 @@ describe('funcionalidade Login', () => {
         cy.get('.woocommerce-form > .button').click()
 
         cy.get('.page-title').should('contain', 'Minha conta')
+    })
+
+    it('Deve fazer login com sucesso - Usando arquivo de dados', () => {
+        cy.get('#username').type(perfil.usuario)
+        cy.get('#password').type(perfil.senha)
+        cy.get('.woocommerce-form > .button').click()
+
+        cy.get('.page-title').should('contain', 'Minha conta')
+        
+    })
+
+    it('Deve fazer login com sucesso - Usando Fixture', () => {
+        cy.fixture('perfil').then(dados => {
+            cy.get('#username').type(dados.usuario)
+            cy.get('#password').type(dados.senha, {log: false}) //log: false irá garantir que não será exibido a senha nos testes
+            cy.get('.woocommerce-form > .button').click()
+    
+            cy.get('.page-title').should('contain', 'Minha conta')  
+        })
     })
 
     it('Deve exibir uma mensagem de erro ao inserir o usuário inválido', () => {
